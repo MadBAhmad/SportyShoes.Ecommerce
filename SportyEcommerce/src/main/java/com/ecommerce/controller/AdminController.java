@@ -18,12 +18,20 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@RequestMapping(value = "/loginaction", method = RequestMethod.POST)
+	
+	@RequestMapping(value="admin/login", method = RequestMethod.GET)
+	public String login(ModelMap map, javax.servlet.http.HttpServletRequest request)
+	{
+		 map.addAttribute("pageTitle", "ADMIN LOGIN");
+		return "admin/login";
+	}
+	
+	@RequestMapping(value = "/adminloginaction", method = RequestMethod.POST)
 	public String loginaction(ModelMap map, javax.servlet.http.HttpServletRequest request,
-			@RequestParam(value="admin_id", required = true)String admminId,
+			@RequestParam(value="admin_id", required = true)String adminId,
 			@RequestParam(value="admin_pwd", required = true)String admin_pwd)
 	{
-		 Admin admin = adminService.authenticate(admminId, admin_pwd);
+		 Admin admin = adminService.authenticate(adminId, admin_pwd);
 		 if (admin==null){
 			 map.addAttribute("error", "Admin Login Failed!");
 			 return "admin/login";
